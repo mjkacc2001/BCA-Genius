@@ -5,6 +5,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BCA Genius | AI Q&A for Computer Science</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Theme Color for Browser UI -->
+    <meta name="theme-color" content="#111827" />
+
+    <!-- Apple PWA Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="BCA Genius">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <style type="text/css">
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -20,6 +39,17 @@
                 primary: '#f3f4f6', // Off-white
                 secondary: '#9ca3af', // Muted gray for secondary text
               },
+            },
+            keyframes: {
+              shake: {
+                '10%, 90%': { transform: 'translateX(-1px)' },
+                '20%, 80%': { transform: 'translateX(2px)' },
+                '30%, 50%, 70%': { transform: 'translateX(-4px)' },
+                '40%, 60%': { transform: 'translateX(4px)' },
+              }
+            },
+            animation: {
+              shake: 'shake 0.5s ease-in-out',
             }
           }
         }

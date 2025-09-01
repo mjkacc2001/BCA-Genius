@@ -13,8 +13,11 @@ interface ChatScreenProps {
   onLogout: () => void;
 }
 
+const MAX_PROMPT_LENGTH = 2000;
+
 const ChatScreen: React.FC<ChatScreenProps> = ({ user, messages, isLoading, onSendMessage, onLogout }) => {
   const [input, setInput] = useState('');
+  const [inputError, setInputError] = useState<string | null>(null);
   const [isProfileOpen, setProfileOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
@@ -37,10 +40,17 @@ const ChatScreen: React.FC<ChatScreenProps> = ({ user, messages, isLoading, onSe
   }, []);
 
   const handleSend = () => {
-    if (input.trim()) {
-      onSendMessage(input);
-      setInput('');
+    const trimmedInput = input.trim();
+    if (!trimmedInput) {
+      setInputError("Message cannot be empty.");
+      return;
     }
+    if (trimmedInput.length > MAX_PROMPT_LENGTH) {
+      setInputError(`Message cannot exceed ${MAX_PROMPT_LENGTH} characters.`);
+      return;
+    }
+    onSendMessage(trimmedInput);
+    setInput('');
   };
   
   const handleSuggestionClick = (suggestion: string) => {
@@ -105,6 +115,7 @@ const ChatScreen: React.FC<ChatScreenProps> = ({ user, messages, isLoading, onSe
               rows={1}
               onChange={(e) => {
                 setInput(e.target.value);
+                if (inputError) setInputError(null);
                 e.target.style.height = 'auto';
                 e.target.style.height = `${e.target.scrollHeight}px`;
               }}
@@ -125,6 +136,9 @@ const ChatScreen: React.FC<ChatScreenProps> = ({ user, messages, isLoading, onSe
               <SendIcon className="w-6 h-6" />
             </button>
           </div>
+           {inputError && (
+            <p className="text-red-400 text-xs mt-2 text-center animate-shake">{inputError}</p>
+          )}
         </div>
       </footer>
     </div>

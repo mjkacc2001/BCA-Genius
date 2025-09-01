@@ -3,7 +3,7 @@ import React from 'react';
 import type { Message, User } from '../types';
 import { MessageType } from '../types';
 import SuggestionChip from './SuggestionChip';
-import { LogoIcon } from './IconComponents';
+import { LogoIcon, ErrorIcon } from './IconComponents';
 
 interface ChatMessageProps {
   message: Message;
@@ -29,6 +29,20 @@ const FormattedContent: React.FC<{ content: string }> = React.memo(({ content })
 
 const ChatMessage: React.FC<ChatMessageProps> = ({ message, user, onSuggestionClick }) => {
   const isUser = message.sender === 'user';
+
+  if (message.type === MessageType.ERROR) {
+    return (
+      <div className="flex items-start gap-4">
+        <div className="w-10 h-10 flex-shrink-0 bg-red-500/80 rounded-full flex items-center justify-center">
+          <ErrorIcon className="w-6 h-6 text-white" />
+        </div>
+        <div className="max-w-xl p-4 rounded-lg shadow-md bg-surface text-text-primary rounded-bl-none border border-red-500/30">
+          <p className="font-semibold text-red-400 mb-2">System Error</p>
+          {message.content && <p className="text-text-primary">{message.content}</p>}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`flex items-start gap-4 ${isUser ? 'flex-row-reverse' : ''}`}>

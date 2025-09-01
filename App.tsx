@@ -58,11 +58,12 @@ const App: React.FC = () => {
       setMessages(prev => [...prev, botMessage, suggestionMessage]);
     } catch (error) {
       console.error('Error fetching from Gemini API:', error);
+      const errorMessageContent = error instanceof Error ? error.message : "An unknown error occurred. Please check the console for details.";
       const errorMessage: Message = {
         id: `error-${Date.now()}`,
         sender: 'bot',
-        type: MessageType.TEXT,
-        content: "I'm sorry, I encountered an error while processing your request. Please try again.",
+        type: MessageType.ERROR,
+        content: `I'm sorry, I encountered an issue. ${errorMessageContent}`,
       };
       setMessages(prev => [...prev, errorMessage]);
     } finally {

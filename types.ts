@@ -8,6 +8,7 @@ export interface User {
 export enum MessageType {
   TEXT = 'text',
   SUGGESTION = 'suggestion',
+  ERROR = 'error',
 }
 
 export interface Message {

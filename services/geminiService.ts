@@ -48,6 +48,11 @@ export const getAnswerAndSuggestions = async (prompt: string): Promise<{ answer:
     
   } catch (error) {
     console.error("Gemini API call failed:", error);
-    throw new Error("Failed to get a response from the AI. Please check your API key and network connection.");
+     if (error instanceof Error) {
+        if (error.message.includes('API key not valid')) {
+          throw new Error("Your API key is invalid. Please check your configuration.");
+        }
+      }
+    throw new Error("Failed to get a response from the AI. The service may be temporarily unavailable.");
   }
 };
