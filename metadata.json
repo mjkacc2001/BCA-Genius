@@ -1,0 +1,5 @@
+{
+  "name": "BCA Genius",
+  "description": "An AI-powered question and answer application for BCA (Bachelor of Computer Applications) students, featuring an intelligent bot that provides answers and suggests follow-up questions to deepen understanding.",
+  "requestFramePermissions": []
+}
